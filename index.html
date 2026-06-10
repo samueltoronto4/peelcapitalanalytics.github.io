@@ -3,211 +3,270 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CPT 2026 — Defining Moments in Canadian History</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<title>Defining Moments — Samuel Razdan · CPT 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root { --navy: #1B3A6B; --red: #C41E3A; --cream: #FAF8F3; --warm-white: #FFFEF9; --text: #1a1a1a; --text-muted: #5a5a5a; --border: rgba(0,0,0,0.09); }
-html { scroll-behavior: smooth; }
-body { font-family: 'Source Serif 4', Georgia, serif; background: var(--cream); color: var(--text); font-size: 16px; line-height: 1.7; }
+/* ── RESET ─────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
 
-nav { background: var(--navy); padding: 0 3rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
-.logo { font-family: 'Playfair Display', serif; color: #fff; font-size: 16px; }
-.logo span { color: #E8A87C; }
-.nav-links { display: flex; gap: 2rem; }
-.nav-links a { color: rgba(255,255,255,0.7); font-size: 13px; text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
-.nav-links a:hover { color: #fff; }
+/* ── TOKENS ────────────────────────────────────────────────── */
+:root{
+  --bg:        #0C0C0E;
+  --bg2:       #111115;
+  --card:      #13131A;
+  --card2:     #1A1A24;
+  --border:    rgba(255,255,255,0.07);
+  --border2:   rgba(255,255,255,0.12);
+  --red:       #C8102E;
+  --red2:      #E8274A;
+  --gold:      #C9A84C;
+  --blue:      #4B8FD4;
+  --text:      #F0EDE8;
+  --text2:     #B8B4AF;
+  --muted:     #6E6A66;
+  --serif:     'Cormorant Garamond',Georgia,serif;
+  --sans:      'Inter',system-ui,sans-serif;
+}
 
-.hero { background: var(--navy); color: #fff; padding: 5rem 3rem 4rem; position: relative; overflow: hidden; }
-.hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 400px; height: 400px; border: 1px solid rgba(255,255,255,0.07); border-radius: 50%; }
-.hero-inner { max-width: 760px; margin: 0 auto; position: relative; z-index: 1; }
-.hero-kicker { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #E8A87C; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 10px; }
-.hero-kicker::before { content: ''; display: inline-block; width: 28px; height: 1px; background: #E8A87C; }
-.hero h1 { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 600; line-height: 1.15; margin-bottom: 1.25rem; }
-.hero p { font-size: 16px; color: rgba(255,255,255,0.72); max-width: 520px; font-weight: 300; }
-.hero-meta { display: flex; gap: 2rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.12); flex-wrap: wrap; }
-.hero-meta-item { font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; }
-.hero-meta-item strong { display: block; font-size: 14px; color: rgba(255,255,255,0.9); font-weight: 400; margin-bottom: 2px; text-transform: none; letter-spacing: 0; }
+/* ── BASE ──────────────────────────────────────────────────── */
+body{font-family:var(--sans);background:var(--bg);color:var(--text);
+  line-height:1.7;-webkit-font-smoothing:antialiased}
 
-.main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
-.section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 2rem; }
-.section-num { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 400; color: rgba(0,0,0,0.08); line-height: 1; }
-.section-info h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 500; }
-.section-info p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
-section { margin-bottom: 4rem; }
+/* ── SCROLL PROGRESS ───────────────────────────────────────── */
+#prog{position:fixed;top:0;left:0;height:2px;width:0;
+  background:linear-gradient(90deg,var(--red),var(--gold));z-index:999;
+  transition:width .08s linear}
 
-/* MOMENT CARDS */
-.moment-card { background: var(--warm-white); border: 1px solid var(--border); margin-bottom: 2.5rem; position: relative; overflow: hidden; }
-.moment-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; z-index: 1; }
-.moment-card.pre::before { background: var(--navy); }
-.moment-card.post::before { background: var(--red); }
+/* ── NAV ───────────────────────────────────────────────────── */
+nav{position:sticky;top:0;z-index:100;height:54px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;
+  background:rgba(12,12,14,.88);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border)}
+.nav-brand{font-family:var(--serif);font-size:18px;font-weight:600;
+  color:var(--text);letter-spacing:.01em}
+.nav-brand b{color:var(--red);font-weight:600}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-size:11px;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);text-decoration:none;
+  transition:color .2s}
+.nav-links a:hover{color:var(--text)}
 
-/* PHOTO GALLERY */
-.photo-gallery { display: grid; gap: 3px; background: #111; }
-.photo-gallery.two { grid-template-columns: 1fr 1fr; }
-.photo-gallery.three { grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; }
-.photo-gallery.three .photo-main { grid-row: 1 / 3; }
-.photo-item { overflow: hidden; position: relative; background: #2a2a2a; }
-.photo-gallery.two .photo-item { height: 200px; }
-.photo-gallery.three .photo-main { height: 300px; }
-.photo-gallery.three .photo-side { height: 148px; }
-.photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(20%) contrast(1.05); transition: transform 0.4s ease; }
-.photo-item img:hover { transform: scale(1.03); }
-.photo-item img.hidden { display: none; }
+/* ── HERO ──────────────────────────────────────────────────── */
+.hero{position:relative;padding:8rem 2.5rem 6rem;overflow:hidden}
+.hero-noise{position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 90% 70% at 100% 60%,rgba(200,16,46,.10) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 50% at 0% 30%,rgba(75,143,212,.06) 0%,transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 100%,rgba(201,168,76,.05) 0%,transparent 50%);
+  pointer-events:none}
+/* Giant "1917–1996" watermark */
+.hero-yr{position:absolute;right:-1rem;top:50%;transform:translateY(-50%);
+  font-family:var(--serif);font-size:clamp(120px,18vw,220px);font-weight:600;
+  color:rgba(255,255,255,.025);line-height:1;pointer-events:none;
+  letter-spacing:-.02em;white-space:nowrap;user-select:none}
+.hero-inner{position:relative;z-index:1;max-width:880px;margin:0 auto}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;
+  margin-bottom:2rem}
+.hero-tag-dot{width:6px;height:6px;border-radius:50%;background:var(--red)}
+.hero-tag span{font-size:11px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold)}
+h1.hero-title{font-family:var(--serif);
+  font-size:clamp(52px,8vw,96px);
+  font-weight:300;line-height:1.0;letter-spacing:-.02em;
+  color:var(--text);margin-bottom:1.75rem}
+h1.hero-title em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:17px;color:var(--text2);font-weight:300;
+  max-width:500px;line-height:1.8;margin-bottom:2.5rem}
+.hero-author{display:inline-flex;align-items:center;gap:12px;
+  padding:10px 18px;border:1px solid var(--border2);
+  background:var(--card);margin-bottom:3.5rem}
+.hero-author-label{font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted)}
+.hero-author-name{font-size:14px;font-weight:600;color:var(--text);
+  letter-spacing:.02em}
+.hero-divider{width:100%;height:1px;background:var(--border);
+  margin-bottom:2.5rem}
+.hero-stats{display:flex;gap:3.5rem;flex-wrap:wrap}
+.stat-n{font-family:var(--serif);font-size:44px;font-weight:300;
+  color:var(--text);line-height:1;margin-bottom:4px}
+.stat-l{font-size:11px;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted)}
 
-.gallery-caption { font-size: 11px; color: var(--text-muted); padding: 5px 1.5rem 6px; border-bottom: 1px solid var(--border); font-style: italic; background: rgba(0,0,0,0.02); }
+/* ── PAGE BODY ─────────────────────────────────────────────── */
+.page{max-width:1040px;margin:0 auto;padding:5rem 2rem 4rem}
 
-.moment-top { padding: 1.25rem 1.75rem 1rem 2rem; border-bottom: 1px solid var(--border); }
-.moment-era-tag { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
-.pre .moment-era-tag { color: var(--navy); }
-.post .moment-era-tag { color: var(--red); }
-.moment-title { font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 500; line-height: 1.25; }
-.concept-pill { display: inline-flex; padding: 4px 10px; border-radius: 2px; font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; margin-top: 8px; }
-.pill-sig { background: #EDE9FE; color: #3B0764; }
-.pill-persp { background: #FEF3C7; color: #713F12; }
-.pill-cause { background: #FCE7F3; color: #700F3E; }
-.pill-change { background: #DCFCE7; color: #14532D; }
+/* ── SECTION LABELS ────────────────────────────────────────── */
+.sec-head{margin-bottom:3rem}
+.sec-eyebrow{font-size:10px;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+.sec-title{font-family:var(--serif);font-size:36px;font-weight:300;
+  color:var(--text);line-height:1.15}
+.sec-sub{font-size:13px;color:var(--muted);margin-top:.4rem;
+  letter-spacing:.03em}
 
-.moment-body { padding: 1.25rem 1.75rem 1.5rem 2rem; }
-.moment-block { margin-bottom: 1.25rem; }
-.moment-block:last-child { margin-bottom: 0; }
-.moment-block-label { font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
-.moment-block p { font-size: 14px; line-height: 1.75; color: #2a2a2a; font-weight: 300; }
-.analysis-box { border-left: 3px solid; padding: 0.9rem 1.1rem; background: rgba(0,0,0,0.018); margin-top: 0.5rem; }
-.analysis-box p { font-size: 14px; line-height: 1.75; color: #2a2a2a; font-weight: 300; font-style: italic; }
-.sig-border { border-color: #7C3AED; }
-.persp-border { border-color: #D97706; }
-.cause-border { border-color: #DB2777; }
-.change-border { border-color: #16A34A; }
+/* ── ERA MARKER ────────────────────────────────────────────── */
+.era-marker{display:flex;align-items:center;gap:1rem;
+  margin:3.5rem 0 2rem}
+.era-line{flex:1;height:1px;background:var(--border)}
+.era-badge{font-size:10px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--border2);
+  padding:5px 14px;border:1px solid var(--border);
+  white-space:nowrap;background:var(--card)}
 
-.era-label { display: flex; align-items: center; gap: 14px; margin-bottom: 1.5rem; margin-top: 0.5rem; }
-.era-label span { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
-.era-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+/* ── MOMENT CARDS ──────────────────────────────────────────── */
+.mcard{background:var(--card);border:1px solid var(--border);
+  margin-bottom:3rem;overflow:hidden;
+  transition:border-color .3s}
+.mcard:hover{border-color:var(--border2)}
 
-.reflection-box { background: var(--warm-white); border: 1px solid var(--border); padding: 2rem; }
-.reflection-question { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 500; color: var(--navy); margin-bottom: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); font-style: italic; }
-.reflection-box p { font-size: 15px; line-height: 1.85; margin-bottom: 1rem; font-weight: 300; color: #2a2a2a; }
-.reflection-box p:last-child { margin-bottom: 0; }
+/* ── PHOTO MOSAIC — zero gaps, fills card width exactly ─────── */
+.mosaic{display:grid;width:100%;background:#000;
+  /* no gap — images butt right up against each other */
+  gap:0}
+.mosaic.m3{
+  grid-template-columns:62% 38%;
+  grid-template-rows:200px 200px;
+  height:400px}
+.mosaic.m3 .p-main{grid-row:1/3}
+.mimg{overflow:hidden;position:relative}
+.mimg img{width:100%;height:100%;object-fit:cover;display:block;
+  filter:grayscale(25%) contrast(1.08) brightness(.88);
+  transition:transform .7s ease,filter .5s ease}
+.mcard:hover .mimg img{filter:grayscale(0%) contrast(1.04) brightness(.95)}
+.mimg:hover img{transform:scale(1.06)}
 
-.bib-entry { background: var(--warm-white); border: 1px solid var(--border); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
-.bib-cite { font-size: 14px; line-height: 1.7; color: var(--text); margin-bottom: 0.6rem; padding-left: 2em; text-indent: -2em; }
-.bib-cite em { font-style: italic; }
-.bib-annotation { font-size: 13px; line-height: 1.7; color: var(--text-muted); font-weight: 300; padding-left: 2em; }
+/* thin red border between side images */
+.mosaic.m3 .p-side+.p-side{border-top:1px solid rgba(200,16,46,.3)}
 
-footer { background: var(--navy); color: rgba(255,255,255,0.45); text-align: center; padding: 2rem; font-size: 12px; letter-spacing: 0.06em; }
-footer strong { color: rgba(255,255,255,0.75); font-weight: 400; }
-hr.divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+/* caption sits flush under mosaic, no gap */
+.gcap{padding:7px 1.5rem 8px;font-size:10.5px;font-style:italic;
+  color:var(--muted);background:rgba(0,0,0,.4);
+  border-bottom:1px solid var(--border);letter-spacing:.02em}
 
-/* hide broken images gracefully */
-img.photo { background: #1a1a1a; }
+/* ── CARD BODY ─────────────────────────────────────────────── */
+.cbody{padding:1.75rem 2rem 2rem}
+.chead{display:flex;align-items:flex-start;
+  justify-content:space-between;gap:1rem;
+  padding-bottom:1.5rem;margin-bottom:1.75rem;
+  border-bottom:1px solid var(--border)}
+.cdate{font-size:11px;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:7px;font-family:var(--sans)}
+.mcard.pre .cdate{color:var(--blue)}
+.mcard.post .cdate{color:var(--red2)}
+.ctitle-wrap{flex:1}
+/* giant year ghost sits behind title */
+.ctitle-outer{position:relative;overflow:visible}
+.ctitle-ghost{position:absolute;left:-.1em;top:50%;
+  transform:translateY(-50%);
+  font-family:var(--serif);font-size:clamp(60px,9vw,110px);
+  font-weight:600;color:rgba(255,255,255,.025);
+  line-height:1;pointer-events:none;white-space:nowrap;
+  letter-spacing:-.03em;user-select:none}
+.ctitle{font-family:var(--serif);font-size:clamp(22px,3vw,30px);
+  font-weight:400;line-height:1.2;color:var(--text);
+  position:relative;z-index:1}
+.cpill{display:inline-flex;align-items:center;
+  padding:4px 11px;font-size:10px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  white-space:nowrap;flex-shrink:0;margin-top:2px;
+  border:1px solid}
+.pill-sig  {background:rgba(124,58,237,.12);color:#C4B5FD;border-color:rgba(124,58,237,.25)}
+.pill-persp{background:rgba(217,119,6,.12); color:#FCD34D;border-color:rgba(217,119,6,.25)}
+.pill-cause{background:rgba(219,39,119,.12);color:#F9A8D4;border-color:rgba(219,39,119,.25)}
+.pill-chng {background:rgba(22,163,74,.12); color:#86EFAC;border-color:rgba(22,163,74,.25)}
+
+/* blocks */
+.blocks{display:flex;flex-direction:column;gap:1.4rem}
+.blabel{font-size:10px;font-weight:600;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:.55rem}
+.blocks p{font-size:15px;line-height:1.85;color:var(--text2);font-weight:300}
+.abox{padding:1rem 1.25rem;background:rgba(255,255,255,.025);
+  border-left:2px solid;margin-top:.2rem}
+.abox p{font-size:14.5px;line-height:1.9;font-style:italic}
+.abox-sig  {border-color:#7C3AED}
+.abox-persp{border-color:#D97706}
+.abox-cause{border-color:#DB2777}
+.abox-chng {border-color:#16A34A}
+
+/* ── DIVIDER ───────────────────────────────────────────────── */
+hr.div{border:none;border-top:1px solid var(--border);margin:4.5rem 0}
+
+/* ── REFLECTION ────────────────────────────────────────────── */
+.ref-card{background:var(--card);border:1px solid var(--border);
+  padding:2.5rem}
+.ref-q{font-family:var(--serif);font-size:clamp(20px,3vw,28px);
+  font-weight:300;font-style:italic;color:var(--text);
+  margin-bottom:2rem;padding-bottom:1.75rem;
+  border-bottom:1px solid var(--border);line-height:1.3}
+.ref-q::before{content:'\201C';color:var(--red);
+  font-size:1.4em;line-height:0;vertical-align:-.3em;margin-right:3px}
+.ref-card p{font-size:16px;line-height:1.95;color:var(--text2);
+  font-weight:300;margin-bottom:1.25rem}
+.ref-card p:last-child{margin-bottom:0}
+
+/* ── BIBLIOGRAPHY ──────────────────────────────────────────── */
+.bib-list{display:flex;flex-direction:column;gap:2px}
+.bib-entry{background:var(--card);border:1px solid var(--border);
+  padding:1.5rem 1.75rem;position:relative;
+  transition:background .2s,border-color .2s}
+.bib-entry::before{content:'';position:absolute;left:0;top:0;bottom:0;
+  width:2px;background:var(--red);opacity:0;transition:opacity .25s}
+.bib-entry:hover{background:var(--card2);border-color:var(--border2)}
+.bib-entry:hover::before{opacity:1}
+.bib-n{font-size:10px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.bib-cite{font-size:14px;line-height:1.75;color:var(--text);
+  margin-bottom:.75rem;padding-left:1.75em;text-indent:-1.75em}
+.bib-cite em{font-style:italic}
+.bib-ann{font-size:13px;line-height:1.75;color:var(--text2);
+  font-weight:300;padding-left:1.75em}
+
+/* ── FOOTER ────────────────────────────────────────────────── */
+footer{background:var(--card);border-top:1px solid var(--border);
+  padding:3.5rem 2rem;text-align:center}
+.foot-leaf{font-size:24px;margin-bottom:1rem;opacity:.4}
+.foot-title{font-family:var(--serif);font-size:22px;font-weight:300;
+  color:var(--text);margin-bottom:.5rem}
+.foot-author{font-size:13px;color:var(--text2);margin-bottom:1.25rem}
+.foot-author strong{color:var(--text);font-weight:600}
+.foot-meta{font-size:11px;color:var(--muted);letter-spacing:.07em;
+  text-transform:uppercase}
+
+/* ── REVEAL ────────────────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(18px);
+  transition:opacity .55s ease,transform .55s ease}
+.reveal.vis{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+
+/* ── RESPONSIVE ────────────────────────────────────────────── */
+@media(max-width:680px){
+  nav{padding:0 1.25rem}
+  .hero{padding:5rem 1.25rem 4rem}
+  .page{padding:3rem 1.25rem 2rem}
+  .mosaic.m3{grid-template-columns:1fr 1fr;grid-template-rows:180px 120px 120px;height:auto}
+  .mosaic.m3 .p-main{grid-row:1;grid-column:1/3}
+  .hero-yr{display:none}
+  .chead{flex-direction:column}
+  .cbody{padding:1.25rem 1.25rem 1.5rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .mimg img{transition:none}
+}
 </style>
-
-<style>
-body{
- background:#111 !important;
- color:#f2f2f2 !important;
- font-size:18px !important;
- line-height:1.9 !important;
-}
-nav{
- background:#8B0000 !important;
-}
-.hero{
- background:linear-gradient(135deg,#1a0000,#8B0000,#111) !important;
- padding:7rem 3rem !important;
-}
-.hero h1{
- font-size:64px !important;
- max-width:900px;
-}
-.hero p{
- color:#f0f0f0 !important;
- font-size:20px !important;
- max-width:800px !important;
-}
-.main{
- max-width:1400px !important;
-}
-.section-info h2,.moment-title,.reflection-question{
- color:#fff !important;
-}
-.era-label span{
- color:#ffb3b3 !important;
- font-size:14px !important;
-}
-.moment-card{
- display:grid !important;
- grid-template-columns: 42% 58%;
- background:#1c1c1c !important;
- border:1px solid #b3001b !important;
- border-radius:16px;
- overflow:hidden;
- margin-bottom:3rem !important;
- box-shadow:0 0 25px rgba(255,0,0,.15);
-}
-.photo-gallery{
- height:100% !important;
-}
-.photo-gallery .photo-item,
-.photo-gallery.two .photo-item,
-.photo-gallery.three .photo-main,
-.photo-gallery.three .photo-side{
- height:100% !important;
- min-height:260px;
-}
-.moment-top,.moment-body{
- background:#1c1c1c !important;
-}
-.moment-body p{
- color:#efefef !important;
- font-size:17px !important;
-}
-.moment-block-label{
- color:#ff8a8a !important;
- font-size:12px !important;
-}
-.gallery-caption{
- background:#141414 !important;
- color:#ddd !important;
-}
-.analysis-box{
- background:#2a2a2a !important;
-}
-.reflection-box,.bib-entry{
- background:#1c1c1c !important;
- color:#f2f2f2 !important;
- border:1px solid #b3001b !important;
- border-radius:12px;
-}
-footer{
- background:#8B0000 !important;
- color:white !important;
-}
-@media(max-width:900px){
- .moment-card{
-  grid-template-columns:1fr !important;
- }
- .hero h1{
-  font-size:42px !important;
- }
-}
-</style>
-
-
-<style>
-.photo-item{
- background:#333 !important;
-}
-.photo-item img{
- opacity:1 !important;
-}
-</style>
-
 </head>
 <body>
 
+<div id="prog"></div>
+
+<!-- ── NAV ──────────────────────────────────────────────── -->
 <nav>
-  <div class="logo">&#127809; <span>Canadian</span> History Exhibit</div>
+  <div class="nav-brand">&#127809;&nbsp; <b>Defining Moments</b> in Canadian History</div>
   <div class="nav-links">
     <a href="#moments">Moments</a>
     <a href="#reflection">Reflection</a>
@@ -215,175 +274,239 @@ footer{
   </div>
 </nav>
 
+<!-- ── HERO ─────────────────────────────────────────────── -->
 <div class="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-yr">1917&ndash;1996</div>
   <div class="hero-inner">
-    <div class="hero-kicker">CPT 2026</div>
-    <h1>Defining Moments in<br>Canadian History</h1>
-    <p>A digital exhibit exploring four pivotal events that shaped the nation &mdash; from the battlefields of WWI to the legacy of residential schools.</p>
-    <div class="hero-meta">
-      <div class="hero-meta-item"><strong>4</strong>Defining Moments</div>
-      <div class="hero-meta-item"><strong>1917 &ndash; 1996</strong>Time Period</div>
-      <div class="hero-meta-item"><strong>4</strong>Historical Concepts</div>
-      <div class="hero-meta-item"><strong>4</strong>Annotated Sources</div>
+    <div class="hero-tag">
+      <div class="hero-tag-dot"></div>
+      <span>CPT 2026 &nbsp;&middot;&nbsp; Digital History Exhibit</span>
+    </div>
+    <h1 class="hero-title">Defining<br><em>Moments</em><br>in Canadian History</h1>
+    <p class="hero-sub">Four pivotal events that shaped Canada&rsquo;s identity, politics, and people &mdash; from the battlefields of WWI to the last residential school.</p>
+    <div class="hero-author">
+      <span class="hero-author-label">Authored by</span>
+      <span class="hero-author-name">Samuel Razdan</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stats">
+      <div><div class="stat-n">4</div><div class="stat-l">Defining Moments</div></div>
+      <div><div class="stat-n">1917&ndash;96</div><div class="stat-l">Time Span</div></div>
+      <div><div class="stat-n">4</div><div class="stat-l">Historical Concepts</div></div>
+      <div><div class="stat-n">4</div><div class="stat-l">Annotated Sources</div></div>
     </div>
   </div>
 </div>
 
-<div class="main">
+<!-- ── PAGE BODY ─────────────────────────────────────────── -->
+<div class="page">
 
+  <!-- MOMENTS -->
   <section id="moments">
-    <div class="section-header">
-      <div class="section-num">01</div>
-      <div class="section-info"><h2>Defining Moments</h2><p>Four events that shaped Canada&rsquo;s identity, politics, and people</p></div>
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">Section 01</div>
+      <div class="sec-title">Defining Moments</div>
+      <div class="sec-sub">Four events that shaped Canada&rsquo;s identity, politics, and people</div>
     </div>
 
-    <div class="era-label"><span>Pre-1950</span></div>
+    <!-- ERA: PRE-1950 -->
+    <div class="era-marker reveal">
+      <div class="era-line"></div>
+      <div class="era-badge">Pre&ndash;1950</div>
+      <div class="era-line"></div>
+    </div>
 
-    <!-- MOMENT 1: VIMY RIDGE -->
-    <div class="moment-card pre">
-      <div class="photo-gallery three">
-        <div class="photo-item photo-main">
-          <img class="photo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27800%27%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%23222%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2745%25%27%20font-size%3D%2742%27%20fill%3D%27white%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EBattle%20of%20Vimy%20Ridge%20-%20Archival%20Photo%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20font-size%3D%2724%27%20fill%3D%27%23cccccc%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EReplace%20with%20verified%20Library%20and%20Archives%20Canada%20image%20if%20desired%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="Canadian soldiers at Vimy Ridge" >
+    <!-- ── CARD 1: VIMY RIDGE ────────────────────────────── -->
+    <div class="mcard pre reveal">
+      <div class="mosaic m3">
+        <div class="mimg p-main">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/Canadian_reserves_dig_in_under_shell_fire_during_Battle_of_Vimy_Ridge.jpg"
+               alt="Canadian soldiers digging in under shellfire, Vimy Ridge, April 1917">
         </div>
-        <div class="photo-item photo-side">
-          <img class="photo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27800%27%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%23222%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2745%25%27%20font-size%3D%2742%27%20fill%3D%27white%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3ECanadian%20Troops%20After%20Vimy%20-%20Archival%20Photo%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20font-size%3D%2724%27%20fill%3D%27%23cccccc%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EReplace%20with%20verified%20Library%20and%20Archives%20Canada%20image%20if%20desired%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="Canadian troops after Vimy" >
+        <div class="mimg p-side">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Canadian_troops_returning_from_Vimy_Ridge_LAC_3194757.jpg"
+               alt="Canadian troops returning from Vimy Ridge, May 1917">
         </div>
-        <div class="photo-item photo-side">
-          <img class="photo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27800%27%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%23222%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2745%25%27%20font-size%3D%2742%27%20fill%3D%27white%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EGeneral%20Byng%20at%20Vimy%20Ridge%20-%20Archival%20Photo%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20font-size%3D%2724%27%20fill%3D%27%23cccccc%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EReplace%20with%20verified%20Library%20and%20Archives%20Canada%20image%20if%20desired%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="General Byng at Vimy Ridge" >
+        <div class="mimg p-side">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Byng_inspects_captured_trench_mortars_at_Vimy_Ridge_May_1917_LAC_3213518.jpg"
+               alt="General Byng inspects captured trench mortars, May 1917">
         </div>
       </div>
-      <div class="gallery-caption">Left: Canadians digging in under fire, Vimy Ridge, April 1917 &nbsp;|&nbsp; Top right: Canadian troops returning from Vimy &nbsp;|&nbsp; Bottom right: Gen. Byng inspects captured German mortars. Library and Archives Canada.</div>
-      <div class="moment-top">
-        <div class="moment-era-tag">April 1917 &middot; World War I</div>
-        <div class="moment-title">Battle of Vimy Ridge</div>
-        <span class="concept-pill pill-sig">Historical Significance</span>
-      </div>
-      <div class="moment-body">
-        <div class="moment-block">
-          <div class="moment-block-label">Summary</div>
-          <p>In April 1917, all four divisions of the Canadian Corps fought together for the first time and captured Vimy Ridge in northern France &mdash; a position British and French forces had failed to take for years. The victory cost roughly 3,600 Canadian lives, but its success marked a turning point in how Canada saw itself on the world stage.</p>
+      <div class="gcap">Left: Canadian reserves dig in under shellfire, April 1917 &nbsp;&middot;&nbsp; Top right: Troops returning from Vimy, May 1917 &nbsp;&middot;&nbsp; Bottom right: Gen. Byng inspects captured mortars. Library and Archives Canada.</div>
+      <div class="cbody">
+        <div class="chead">
+          <div class="ctitle-wrap">
+            <div class="cdate">April 1917 &nbsp;&middot;&nbsp; World War I</div>
+            <div class="ctitle-outer">
+              <div class="ctitle-ghost">1917</div>
+              <div class="ctitle">Battle of Vimy Ridge</div>
+            </div>
+          </div>
+          <span class="cpill pill-sig">Historical Significance</span>
         </div>
-        <div class="moment-block">
-          <div class="moment-block-label">Why it is a defining moment</div>
-          <p>Vimy Ridge is widely regarded as the birth of Canadian national identity. The unified effort transcended regional and linguistic divisions, and Canada&rsquo;s role in the victory led directly to it signing the Treaty of Versailles as an independent nation in 1919 &mdash; no longer just an extension of Britain.</p>
-        </div>
-        <div class="moment-block">
-          <div class="moment-block-label">Historical Significance &mdash; Analysis</div>
-          <div class="analysis-box sig-border">
-            <p>Vimy Ridge is historically significant because it permanently altered Canada&rsquo;s place in the world. Before the battle, Canada had little independent international identity. The victory gave Canadians a shared moment of sacrifice and achievement that still resonates today &mdash; April 9th is observed as Vimy Ridge Day, and the memorial in France remains one of Canada&rsquo;s most visited monuments abroad.</p>
+        <div class="blocks">
+          <div>
+            <div class="blabel">Summary</div>
+            <p>In April 1917, all four divisions of the Canadian Corps fought together for the first time and captured Vimy Ridge in northern France &mdash; a position British and French forces had failed to take for years. The victory cost roughly 3,600 Canadian lives, but its success marked a turning point in how Canada saw itself on the world stage.</p>
+          </div>
+          <div>
+            <div class="blabel">Why it is a defining moment</div>
+            <p>Vimy Ridge is widely regarded as the birth of Canadian national identity. The unified effort transcended regional and linguistic divisions, and Canada&rsquo;s role in the victory led directly to it signing the Treaty of Versailles as an independent nation in 1919 &mdash; no longer just an extension of Britain.</p>
+          </div>
+          <div>
+            <div class="blabel">Historical Significance &mdash; Analysis</div>
+            <div class="abox abox-sig">
+              <p>Vimy Ridge is historically significant because it permanently altered Canada&rsquo;s place in the world. Before the battle, Canada had little independent international identity. The victory gave Canadians a shared moment of sacrifice and achievement that still resonates today &mdash; April 9th is observed as Vimy Ridge Day, and the memorial in France remains one of Canada&rsquo;s most visited monuments abroad.</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- MOMENT 2: JAPANESE INTERNMENT -->
-    <div class="moment-card pre">
-      <div class="photo-gallery three">
-        <div class="photo-item photo-main">
-          <img class="photo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27800%27%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%23222%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2745%25%27%20font-size%3D%2742%27%20fill%3D%27white%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EJapanese%20Canadians%20at%20Slocan%20City%20-%20Archival%20Photo%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20font-size%3D%2724%27%20fill%3D%27%23cccccc%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EReplace%20with%20verified%20Library%20and%20Archives%20Canada%20image%20if%20desired%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="Japanese Canadians arriving at Slocan City internment camp, 1942" >
+    <!-- ── CARD 2: JAPANESE INTERNMENT ──────────────────── -->
+    <div class="mcard pre reveal d1">
+      <div class="mosaic m3">
+        <div class="mimg p-main">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/58/Japanese_internment_camp_in_British_Columbia.jpg"
+               alt="Japanese Canadian internment camp, British Columbia, 1942">
         </div>
-        <div class="photo-item photo-side">
-          <img class="photo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27800%27%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%23222%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2745%25%27%20font-size%3D%2742%27%20fill%3D%27white%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EAngler%20Internment%20Camp%20-%20Archival%20Photo%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20font-size%3D%2724%27%20fill%3D%27%23cccccc%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EReplace%20with%20verified%20Library%20and%20Archives%20Canada%20image%20if%20desired%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="Angler Internment Camp" >
+        <div class="mimg p-side">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Japanese_Canadian_relocation_-_Men%27s_dormitory_in_Forum_building.jpg"
+               alt="Men's dormitory, Hastings Park Forum building, 1942">
         </div>
-        <div class="photo-item photo-side">
-          <img class="photo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27800%27%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%23222%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2745%25%27%20font-size%3D%2742%27%20fill%3D%27white%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EJapanese%20Canadian%20Internment%20Camp%20BC%20-%20Archival%20Photo%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20font-size%3D%2724%27%20fill%3D%27%23cccccc%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EReplace%20with%20verified%20Library%20and%20Archives%20Canada%20image%20if%20desired%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="Japanese Canadian internment camp, BC" >
+        <div class="mimg p-side">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Japanese_evacuation_Hastings_Park_-_kindergarten.jpg"
+               alt="Kindergarten class, Hastings Park, 1942">
         </div>
       </div>
-      <div class="gallery-caption">Left: Japanese Canadians arriving at Slocan City, BC, 1942 &nbsp;|&nbsp; Top right: Angler Internment Camp &nbsp;|&nbsp; Bottom right: Internment camp in British Columbia. Archives of Ontario / Library and Archives Canada.</div>
-      <div class="moment-top">
-        <div class="moment-era-tag">1942 &middot; World War II</div>
-        <div class="moment-title">Internment of Japanese Canadians</div>
-        <span class="concept-pill pill-persp">Historical Perspective</span>
-      </div>
-      <div class="moment-body">
-        <div class="moment-block">
-          <div class="moment-block-label">Summary</div>
-          <p>Following Pearl Harbor, the Canadian government used the War Measures Act to forcibly relocate over 22,000 Japanese Canadians from BC. Their homes, businesses, and property were seized and sold. Families were separated &mdash; not because of any evidence of disloyalty, but out of racial fear. Camps did not close until 1949, four years after the war ended.</p>
+      <div class="gcap">Left: Japanese Canadian internment camp, BC &nbsp;&middot;&nbsp; Top right: Men&rsquo;s dormitory, Hastings Park Forum, Vancouver, 1942 &nbsp;&middot;&nbsp; Bottom right: Kindergarten class, Hastings Park, 1942. Library and Archives Canada.</div>
+      <div class="cbody">
+        <div class="chead">
+          <div class="ctitle-wrap">
+            <div class="cdate">1942 &nbsp;&middot;&nbsp; World War II</div>
+            <div class="ctitle-outer">
+              <div class="ctitle-ghost">1942</div>
+              <div class="ctitle">Internment of Japanese Canadians</div>
+            </div>
+          </div>
+          <span class="cpill pill-persp">Historical Perspective</span>
         </div>
-        <div class="moment-block">
-          <div class="moment-block-label">Why it is a defining moment</div>
-          <p>This event exposes a deep gap between Canada&rsquo;s stated values and its actions. In 1988, PM Brian Mulroney officially apologized and offered redress, acknowledging the internment was racially motivated. It forces Canadians to confront how fear and racism can override democratic principles.</p>
-        </div>
-        <div class="moment-block">
-          <div class="moment-block-label">Historical Perspective &mdash; Analysis</div>
-          <div class="analysis-box persp-border">
-            <p>Perspectives on this event vary sharply. The government framed internment as a national security measure; many white British Columbians supported it out of prejudice and economic competition. For Japanese Canadians, it meant losing everything in their own country despite being loyal citizens. Examining both perspectives shows how the label &ldquo;national security&rdquo; has historically been used to legitimize racism.</p>
+        <div class="blocks">
+          <div>
+            <div class="blabel">Summary</div>
+            <p>Following Pearl Harbor, the Canadian government used the War Measures Act to forcibly relocate over 22,000 Japanese Canadians from BC. Their homes, businesses, and property were seized and sold. Families were separated &mdash; not because of any evidence of disloyalty, but out of racial fear. Camps did not close until 1949, four years after the war ended.</p>
+          </div>
+          <div>
+            <div class="blabel">Why it is a defining moment</div>
+            <p>This event exposes a deep gap between Canada&rsquo;s stated values and its actions. In 1988, PM Brian Mulroney officially apologized and offered redress, acknowledging the internment was racially motivated. It forces Canadians to confront how fear and racism can override democratic principles.</p>
+          </div>
+          <div>
+            <div class="blabel">Historical Perspective &mdash; Analysis</div>
+            <div class="abox abox-persp">
+              <p>Perspectives on this event vary sharply. The government framed internment as a national security measure; many white British Columbians supported it out of prejudice and economic competition. For Japanese Canadians, it meant losing everything in their own country despite being loyal citizens. Examining both perspectives shows how the label &ldquo;national security&rdquo; has historically been used to legitimize racism.</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="era-label"><span>Post-1950</span></div>
+    <!-- ERA: POST-1950 -->
+    <div class="era-marker reveal">
+      <div class="era-line"></div>
+      <div class="era-badge">Post&ndash;1950</div>
+      <div class="era-line"></div>
+    </div>
 
-    <!-- MOMENT 3: OCTOBER CRISIS -->
-    <div class="moment-card post">
-      <div class="photo-gallery three">
-        <div class="photo-item photo-main">
-          <img class="photo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27800%27%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%23222%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2745%25%27%20font-size%3D%2742%27%20fill%3D%27white%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EOctober%20Crisis%20Army%20in%20Montreal%20-%20Archival%20Photo%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20font-size%3D%2724%27%20fill%3D%27%23cccccc%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EReplace%20with%20verified%20Library%20and%20Archives%20Canada%20image%20if%20desired%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="Canadian army deployed in Montreal, October Crisis 1970" >
+    <!-- ── CARD 3: OCTOBER CRISIS ────────────────────────── -->
+    <div class="mcard post reveal">
+      <div class="mosaic m3">
+        <div class="mimg p-main">
+          <img src="https://historyofrights.ca/wp-content/uploads/images/FLQ_soliders_house-scaled.jpg"
+               alt="Armed soldiers outside a Montreal residence, October Crisis 1970">
         </div>
-        <div class="photo-item photo-side">
-          <img class="photo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27800%27%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%23222%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2745%25%27%20font-size%3D%2742%27%20fill%3D%27white%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EPierre%20Trudeau%201970%20-%20Archival%20Photo%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20font-size%3D%2724%27%20fill%3D%27%23cccccc%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EReplace%20with%20verified%20Library%20and%20Archives%20Canada%20image%20if%20desired%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="Pierre Trudeau, 1970" >
+        <div class="mimg p-side">
+          <img src="https://valourcanada.ca/wp-content/uploads/2019/07/flq-crisis_reg.jpg"
+               alt="Canadian troops deployed in Montreal, FLQ Crisis 1970">
         </div>
-        <div class="photo-item photo-side">
-          <img class="photo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27800%27%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%23222%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2745%25%27%20font-size%3D%2742%27%20fill%3D%27white%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EFLQ%20Manifesto%20Broadcast%20-%20Archival%20Photo%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20font-size%3D%2724%27%20fill%3D%27%23cccccc%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EReplace%20with%20verified%20Library%20and%20Archives%20Canada%20image%20if%20desired%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="FLQ Manifesto broadcast on CBC" >
+        <div class="mimg p-side">
+          <img src="https://jemesouviens.org/wp-content/uploads/sites/2/2022/01/P01_00-CP-photo-1024x768.jpeg"
+               alt="Soldiers patrolling Montreal streets, October 1970">
         </div>
       </div>
-      <div class="gallery-caption">Left: Canadian army patrols Montreal streets, October 1970 &nbsp;|&nbsp; Top right: PM Pierre Trudeau &nbsp;|&nbsp; Bottom right: FLQ Manifesto broadcast on CBC. Library and Archives Canada / CBC.</div>
-      <div class="moment-top">
-        <div class="moment-era-tag">October 1970 &middot; Quebec Crisis</div>
-        <div class="moment-title">The October Crisis</div>
-        <span class="concept-pill pill-cause">Cause &amp; Consequence</span>
-      </div>
-      <div class="moment-body">
-        <div class="moment-block">
-          <div class="moment-block-label">Summary</div>
-          <p>In October 1970, the FLQ kidnapped British diplomat James Cross and Quebec cabinet minister Pierre Laporte, who was later murdered. PM Pierre Trudeau invoked the War Measures Act &mdash; the only peacetime use in Canadian history &mdash; suspending civil liberties. Over 450 people were detained without charge, most released without trial.</p>
+      <div class="gcap">Left: Armed soldiers stand guard outside a Montreal residence, Oct. 1970 &nbsp;&middot;&nbsp; Top right: Troops deployed during the FLQ Crisis &nbsp;&middot;&nbsp; Bottom right: Soldiers patrol Montreal streets, Oct. 15, 1970. Canadian Press / History of Rights / Valour Canada.</div>
+      <div class="cbody">
+        <div class="chead">
+          <div class="ctitle-wrap">
+            <div class="cdate">October 1970 &nbsp;&middot;&nbsp; Quebec Crisis</div>
+            <div class="ctitle-outer">
+              <div class="ctitle-ghost">1970</div>
+              <div class="ctitle">The October Crisis</div>
+            </div>
+          </div>
+          <span class="cpill pill-cause">Cause &amp; Consequence</span>
         </div>
-        <div class="moment-block">
-          <div class="moment-block-label">Why it is a defining moment</div>
-          <p>The October Crisis raised critical questions about the limits of government power and the balance between security and civil liberty. It also shifted the Quebec sovereignty movement away from violence toward democratic means &mdash; paving the way for the Parti Qu&eacute;b&eacute;cois&rsquo;s electoral victory in 1976.</p>
-        </div>
-        <div class="moment-block">
-          <div class="moment-block-label">Cause &amp; Consequence &mdash; Analysis</div>
-          <div class="analysis-box cause-border">
-            <p>The root cause was decades of economic inequality in Quebec, where French Canadians were excluded from English-dominated industries. The consequence was twofold: in the short term, hundreds were jailed without evidence; in the long term, political violence was discredited, the sovereignty movement turned democratic, and questions about state power versus civil liberties became permanent fixtures of Canadian political debate.</p>
+        <div class="blocks">
+          <div>
+            <div class="blabel">Summary</div>
+            <p>In October 1970, the FLQ kidnapped British diplomat James Cross and Quebec cabinet minister Pierre Laporte, who was later murdered. PM Pierre Trudeau invoked the War Measures Act &mdash; the only peacetime use in Canadian history &mdash; suspending civil liberties. Over 450 people were detained without charge, most released without trial.</p>
+          </div>
+          <div>
+            <div class="blabel">Why it is a defining moment</div>
+            <p>The October Crisis raised critical questions about the limits of government power and the balance between security and civil liberty. It also shifted the Quebec sovereignty movement away from violence toward democratic means &mdash; paving the way for the Parti Qu&eacute;b&eacute;cois&rsquo;s electoral victory in 1976.</p>
+          </div>
+          <div>
+            <div class="blabel">Cause &amp; Consequence &mdash; Analysis</div>
+            <div class="abox abox-cause">
+              <p>The root cause was decades of economic inequality in Quebec, where French Canadians were excluded from English-dominated industries. The consequence was twofold: in the short term, hundreds were jailed without evidence; in the long term, political violence was discredited, the sovereignty movement turned democratic, and questions about state power versus civil liberties became permanent fixtures of Canadian political debate.</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- MOMENT 4: RESIDENTIAL SCHOOLS -->
-    <div class="moment-card post">
-      <div class="photo-gallery three">
-        <div class="photo-item photo-main">
-          <img class="photo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27800%27%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%23222%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2745%25%27%20font-size%3D%2742%27%20fill%3D%27white%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3ESt.%20Paul%27s%20Indian%20Industrial%20School%20-%20Archival%20Photo%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20font-size%3D%2724%27%20fill%3D%27%23cccccc%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EReplace%20with%20verified%20Library%20and%20Archives%20Canada%20image%20if%20desired%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="St. Paul's Indian Industrial School, 1901" >
+    <!-- ── CARD 4: RESIDENTIAL SCHOOLS ──────────────────── -->
+    <div class="mcard post reveal d1">
+      <div class="mosaic m3">
+        <div class="mimg p-main">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/Kamloops-indian-residential-school-1930.png"
+               alt="Kamloops Indian Residential School, BC, ca. 1930">
         </div>
-        <div class="photo-item photo-side">
-          <img class="photo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27800%27%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%23222%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2745%25%27%20font-size%3D%2742%27%20fill%3D%27white%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3ELower%20Post%20Residential%20School%20-%20Archival%20Photo%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20font-size%3D%2724%27%20fill%3D%27%23cccccc%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EReplace%20with%20verified%20Library%20and%20Archives%20Canada%20image%20if%20desired%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="Lower Post Residential School" >
+        <div class="mimg p-side">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Photograph_of_Ojibway_children_pupils_of_the_Shingwauk_and_Wawanosh_Homes_Algoma_University_Archives.png"
+               alt="Ojibway children at Shingwauk and Wawanosh Homes">
         </div>
-        <div class="photo-item photo-side">
-          <img class="photo" src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27800%27%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%23222%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2745%25%27%20font-size%3D%2742%27%20fill%3D%27white%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3ETruth%20and%20Reconciliation%20Commission%20-%20Archival%20Graphic%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20font-size%3D%2724%27%20fill%3D%27%23cccccc%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%3EReplace%20with%20verified%20Library%20and%20Archives%20Canada%20image%20if%20desired%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="Truth and Reconciliation Commission" >
+        <div class="mimg p-side">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Vancouver_Art_Gallery_community_memorial_on_the_215_buried_children_at_Kamloops_Residential_School.png"
+               alt="Community memorial, Vancouver Art Gallery, 2021">
         </div>
       </div>
-      <div class="gallery-caption">Left: St. Paul&rsquo;s Indian Industrial School, BC, 1901 &nbsp;|&nbsp; Top right: Lower Post Residential School, BC &nbsp;|&nbsp; Bottom right: TRC logo. Library and Archives Canada / Government of Canada.</div>
-      <div class="moment-top">
-        <div class="moment-era-tag">1996 &middot; Indigenous History</div>
-        <div class="moment-title">Residential Schools &mdash; Last School Closing</div>
-        <span class="concept-pill pill-change">Continuity &amp; Change</span>
-      </div>
-      <div class="moment-body">
-        <div class="moment-block">
-          <div class="moment-block-label">Summary</div>
-          <p>Canada&rsquo;s residential school system ran for over 130 years. The last federally funded school &mdash; Gordon Indian Residential School in Saskatchewan &mdash; closed in 1996. More than 150,000 Indigenous children were forcibly separated from their families, banned from speaking their languages, and subjected to widespread abuse. The 2015 Truth and Reconciliation Commission officially described the system as cultural genocide.</p>
+      <div class="gcap">Left: Kamloops Indian Residential School, BC, ca. 1930 &nbsp;&middot;&nbsp; Top right: Ojibway children, Shingwauk &amp; Wawanosh Homes, Sault Ste. Marie &nbsp;&middot;&nbsp; Bottom right: Community memorial, Vancouver Art Gallery, 2021. Wikimedia Commons.</div>
+      <div class="cbody">
+        <div class="chead">
+          <div class="ctitle-wrap">
+            <div class="cdate">1996 &nbsp;&middot;&nbsp; Indigenous History</div>
+            <div class="ctitle-outer">
+              <div class="ctitle-ghost">1996</div>
+              <div class="ctitle">Residential Schools &mdash; Last School Closing</div>
+            </div>
+          </div>
+          <span class="cpill pill-chng">Continuity &amp; Change</span>
         </div>
-        <div class="moment-block">
-          <div class="moment-block-label">Why it is a defining moment</div>
-          <p>The 1996 closing marks the formal end of an institutionalized system of cultural destruction. It forces Canada to reckon with how recent this harm truly is &mdash; not a distant historical wrong, but one whose consequences are still unfolding in Indigenous communities today.</p>
-        </div>
-        <div class="moment-block">
-          <div class="moment-block-label">Continuity &amp; Change &mdash; Analysis</div>
-          <div class="analysis-box change-border">
-            <p>The continuity is painful: assimilationist colonial policy dates back to before Confederation, and its effects &mdash; intergenerational trauma, loss of language, overrepresentation in prisons and child welfare &mdash; persist today. Change has come slowly: the 2008 federal apology and the TRC&rsquo;s 94 Calls to Action are meaningful steps, yet many Calls remain unimplemented. This tension between acknowledgment and action defines Canada&rsquo;s ongoing relationship with reconciliation.</p>
+        <div class="blocks">
+          <div>
+            <div class="blabel">Summary</div>
+            <p>Canada&rsquo;s residential school system ran for over 130 years. The last federally funded school &mdash; Gordon Indian Residential School in Saskatchewan &mdash; closed in 1996. More than 150,000 Indigenous children were forcibly separated from their families, banned from speaking their languages, and subjected to widespread abuse. The 2015 Truth and Reconciliation Commission officially described the system as cultural genocide.</p>
+          </div>
+          <div>
+            <div class="blabel">Why it is a defining moment</div>
+            <p>The 1996 closing marks the formal end of an institutionalized system of cultural destruction. It forces Canada to reckon with how recent this harm truly is &mdash; not a distant historical wrong, but one whose consequences are still unfolding in Indigenous communities today.</p>
+          </div>
+          <div>
+            <div class="blabel">Continuity &amp; Change &mdash; Analysis</div>
+            <div class="abox abox-chng">
+              <p>The continuity is painful: assimilationist colonial policy dates back to before Confederation, and its effects &mdash; intergenerational trauma, loss of language, overrepresentation in prisons and child welfare &mdash; persist today. Change has come slowly: the 2008 federal apology and the TRC&rsquo;s 94 Calls to Action are meaningful steps, yet many Calls remain unimplemented. This tension between acknowledgment and action defines Canada&rsquo;s ongoing relationship with reconciliation.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -391,55 +514,78 @@ footer{
 
   </section>
 
-  <hr class="divider">
+  <hr class="div">
 
+  <!-- REFLECTION -->
   <section id="reflection">
-    <div class="section-header">
-      <div class="section-num">02</div>
-      <div class="section-info"><h2>Reflection</h2><p>A personal response grounded in the four defining moments</p></div>
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">Section 02</div>
+      <div class="sec-title">Reflection</div>
+      <div class="sec-sub">A personal response grounded in the four defining moments</div>
     </div>
-    <div class="reflection-box">
-      <div class="reflection-question">&ldquo;Is Canada a country you can be proud of?&rdquo;</div>
+    <div class="ref-card reveal">
+      <div class="ref-q">Is Canada a country you can be proud of?</div>
       <p>Yes &mdash; but only with honesty. The Battle of Vimy Ridge shows a Canada capable of unity, courage, and earning its place among nations. That pride is real and worth holding onto. But the same country that fought at Vimy also imprisoned Japanese Canadians without cause, suspended civil liberties during the October Crisis, and ran a residential school system it did not shut down until 1996. These are not distant footnotes &mdash; they are part of the same story, and pretending otherwise is not patriotism.</p>
       <p>Canada is worth being proud of precisely because it has the capacity to confront its failures. The 1988 apology to Japanese Canadians, the Truth and Reconciliation Commission, and the ongoing push for Indigenous rights show a country capable of self-reflection and change. That work is unfinished &mdash; many TRC Calls to Action remain unmet &mdash; but the willingness to reckon with the past is what separates honest pride from denial. Canada is not a perfect country, but it is one worth fighting to improve.</p>
     </div>
   </section>
 
-  <hr class="divider">
+  <hr class="div">
 
+  <!-- BIBLIOGRAPHY -->
   <section id="bibliography">
-    <div class="section-header">
-      <div class="section-num">03</div>
-      <div class="section-info"><h2>Annotated Bibliography</h2><p>Chicago Author-Date 18th ed. &middot; alphabetical order &middot; 4 sources</p></div>
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">Section 03</div>
+      <div class="sec-title">Annotated Bibliography</div>
+      <div class="sec-sub">Chicago Author-Date 18th ed. &nbsp;&middot;&nbsp; Alphabetical order &nbsp;&middot;&nbsp; 4 sources</div>
     </div>
-
-    <div class="bib-entry">
-      <p class="bib-cite">Adachi, Ken. 1976. <em>The Enemy That Never Was: A History of the Japanese Canadians.</em> McClelland and Stewart.</p>
-      <p class="bib-annotation">A foundational text on the Japanese Canadian experience, covering immigration through the 1942 internment. Adachi draws on community records and oral histories to provide perspectives that government sources alone cannot offer, making it essential for the Historical Perspective analysis of the internment.</p>
+    <div class="bib-list">
+      <div class="bib-entry reveal">
+        <div class="bib-n">01 &nbsp;/&nbsp; Adachi 1976</div>
+        <p class="bib-cite">Adachi, Ken. 1976. <em>The Enemy That Never Was: A History of the Japanese Canadians.</em> McClelland and Stewart.</p>
+        <p class="bib-ann">A foundational text on the Japanese Canadian experience, covering immigration through the 1942 internment. Adachi draws on community records and oral histories to provide perspectives that government sources alone cannot offer, making it essential for the Historical Perspective analysis of the internment.</p>
+      </div>
+      <div class="bib-entry reveal d1">
+        <div class="bib-n">02 &nbsp;/&nbsp; Berton 1986</div>
+        <p class="bib-cite">Berton, Pierre. 1986. <em>Vimy.</em> McClelland and Stewart.</p>
+        <p class="bib-ann">A detailed account of the Battle of Vimy Ridge drawing on veterans&rsquo; testimonies and military records. As one of Canada&rsquo;s foremost popular historians, Berton&rsquo;s work is widely cited and reliable, providing the primary basis for the Historical Significance analysis of Vimy&rsquo;s role in shaping national identity.</p>
+      </div>
+      <div class="bib-entry reveal d2">
+        <div class="bib-n">03 &nbsp;/&nbsp; Tetley 2006</div>
+        <p class="bib-cite">Tetley, William. 2006. <em>The October Crisis, 1970: An Insider&rsquo;s View.</em> McGill-Queen&rsquo;s University Press.</p>
+        <p class="bib-ann">A firsthand account from a Quebec cabinet minister who lived through the October Crisis. Tetley&rsquo;s insider perspective is invaluable for understanding the government&rsquo;s reasoning behind invoking the War Measures Act and the political consequences that followed.</p>
+      </div>
+      <div class="bib-entry reveal d3">
+        <div class="bib-n">04 &nbsp;/&nbsp; TRC 2015</div>
+        <p class="bib-cite">Truth and Reconciliation Commission of Canada. 2015. <em>Honouring the Truth, Reconciling for the Future: Summary of the Final Report of the Truth and Reconciliation Commission of Canada.</em> Truth and Reconciliation Commission of Canada.</p>
+        <p class="bib-ann">The TRC&rsquo;s official summary report documenting residential school history through survivor testimony. Its conclusion that the system constituted cultural genocide is central to the Continuity and Change analysis.</p>
+      </div>
     </div>
-
-    <div class="bib-entry">
-      <p class="bib-cite">Berton, Pierre. 1986. <em>Vimy.</em> McClelland and Stewart.</p>
-      <p class="bib-annotation">A detailed account of the Battle of Vimy Ridge drawing on veterans&rsquo; testimonies and military records. As one of Canada&rsquo;s foremost popular historians, Berton&rsquo;s work is widely cited and reliable, providing the primary basis for the Historical Significance analysis of Vimy&rsquo;s role in shaping national identity.</p>
-    </div>
-
-    <div class="bib-entry">
-      <p class="bib-cite">Tetley, William. 2006. <em>The October Crisis, 1970: An Insider&rsquo;s View.</em> McGill-Queen&rsquo;s University Press.</p>
-      <p class="bib-annotation">A firsthand account from a Quebec cabinet minister who lived through the October Crisis. Tetley&rsquo;s insider perspective is invaluable for understanding the government&rsquo;s reasoning behind invoking the War Measures Act and the political consequences that followed.</p>
-    </div>
-
-    <div class="bib-entry">
-      <p class="bib-cite">Truth and Reconciliation Commission of Canada. 2015. <em>Honouring the Truth, Reconciling for the Future: Summary of the Final Report of the Truth and Reconciliation Commission of Canada.</em> Truth and Reconciliation Commission of Canada.</p>
-      <p class="bib-annotation">The TRC&rsquo;s official summary report documenting residential school history through survivor testimony. This is the primary authoritative source for the fourth defining moment. Its conclusion that the system constituted cultural genocide is central to the Continuity and Change analysis.</p>
-    </div>
-
   </section>
+
 </div>
 
+<!-- FOOTER -->
 <footer>
-  <strong>CPT 2026 &middot; Defining Moments in Canadian History</strong><br>
-  Canadian Museum of History Exhibit
+  <div class="foot-leaf">&#127809;</div>
+  <div class="foot-title">Defining Moments in Canadian History</div>
+  <div class="foot-author">Authored by <strong>Samuel Razdan</strong></div>
+  <div class="foot-meta">CPT 2026 &nbsp;&middot;&nbsp; Canadian Museum of History Exhibit &nbsp;&middot;&nbsp; 1917&ndash;1996</div>
 </footer>
 
+<script>
+// Progress bar
+const prog = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+}, {passive: true});
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+}, {threshold: 0.07});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
